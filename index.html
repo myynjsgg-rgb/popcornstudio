@@ -72,7 +72,7 @@ body:has(a:hover) #cur-o, body:has(button:hover) #cur-o {
 }
 
 /* ── page container ── */
-body { max-width:1200px; margin:0 auto; position:relative; }
+body { max-width:1200px; margin:0 auto; }
 nav {
   position:fixed; top:0; left:0; right:0; z-index:500;
   height:54px;
@@ -458,99 +458,107 @@ footer {
 
 /* ── MODAL ── */
 .modal-wrap {
-  display:none; position:fixed; inset:0; z-index:700;
-  background:rgba(255,255,255,.92); backdrop-filter:blur(16px);
-  align-items:center; justify-content:center; padding:32px;
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  width:100vw; height:100vh;
+  z-index:700;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(16px);
+  overflow-y:auto;
 }
-.modal-wrap.open { display:flex; }
+.modal-wrap.open { display:block; }
 .modal-card {
-  width:100%; max-width:860px;
-  background:var(--bg); border:1px solid var(--line);
+  width:calc(100% - 64px);
+  max-width:860px;
+  margin:48px auto;
+  background:var(--bg);
+  border:1px solid var(--line);
   box-shadow:0 8px 48px rgba(10,10,10,0.1);
-  animation:mIn .4s var(--ease) both; position:relative;
+  position:relative;
+  animation:mIn .4s var(--ease) both;
 }
-/* no top border */
 .modal-card::before { display:none; }
 @keyframes mIn { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
 .modal-vid {
-  aspect-ratio:16/9; background:var(--bg2);
-  display:flex; align-items:center; justify-content:center; overflow:hidden;
-  position: relative;
+  width:100%;
 }
-/* modal slider */
-.modal-slider {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16/9;
-  overflow: hidden;
-  background: #e8e8e6;
+.modal-vid > img {
+  width:100%;
+  height:auto;
+  aspect-ratio:16/9;
+  display:block;
+  object-fit:contain;
+  background:#e8e8e6;
 }
-.modal-slider-inner {
-  display: flex;
-  width: max-content;
-  height: 100%;
-  transition: transform .45s cubic-bezier(0.16,1,0.3,1);
+.modal-vid a {
+  display:flex;
+  width:100%;
+  aspect-ratio:16/9;
+  background:#0a0a0a;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:12px;
+  text-decoration:none;
 }
-.modal-slider-inner img {
-  width: 860px;
-  max-width: 100vw;
-  height: 100%;
-  object-fit: contain;
-  flex-shrink: 0;
-  background: #e8e8e6;
+.modal-slider-wrap {
+  width:100%;
+  background:#e8e8e6;
 }
+.modal-slider-img {
+  width:100%;
+  aspect-ratio:16/9;
+  object-fit:contain;
+  background:#e8e8e6;
+  display:none !important;
+}
+.modal-slider-img.active { display:block !important; }
 .modal-slider-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  background: rgba(255,255,255,.75);
-  border: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background .2s;
+  position:absolute;
+  top:50%; transform:translateY(-50%);
+  z-index:10;
+  background:rgba(255,255,255,.75);
+  border:none;
+  width:36px; height:36px;
+  border-radius:50%;
+  cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
 }
-.modal-slider-btn:hover { background: rgba(255,255,255,.95); }
-.modal-slider-btn.prev { left: 12px; }
-.modal-slider-btn.next { right: 12px; }
+.modal-slider-btn.prev { left:12px; }
+.modal-slider-btn.next { right:12px; }
 .modal-slider-dots {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 6px;
+  position:absolute; bottom:10px; left:50%; transform:translateX(-50%);
+  display:flex; gap:6px;
 }
 .modal-slider-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: rgba(0,0,0,.2);
-  transition: background .3s;
-  cursor: pointer;
+  width:5px; height:5px; border-radius:50%;
+  background:rgba(0,0,0,.2); cursor:pointer;
 }
-.modal-slider-dot.active { background: var(--pink); }
-
+.modal-slider-dot.active { background:var(--pink); }
 .modal-foot {
   padding:16px 22px 20px;
   display:grid; grid-template-columns:auto 1fr; gap:22px;
   border-top:1px solid var(--line);
+  align-items:start;
 }
-.modal-tags { display:flex; flex-direction:column; gap:4px; padding-top:1px; }
+.modal-tags { display:flex; flex-direction:row; flex-wrap:wrap; gap:5px; padding-top:1px; }
 .modal-tag {
-  font-family:var(--ff-d); font-size:.48rem; letter-spacing:.2em;
-  text-transform:uppercase; color:var(--pink-d); white-space:nowrap;
+  font-family:var(--ff-d); font-size:.52rem;
+  letter-spacing:.18em; text-transform:uppercase;
+  color:var(--pink-d);
+  border:1px solid rgba(232,56,144,0.35);
+  border-radius:5px;
+  padding:3px 8px;
+  background:transparent;
+  white-space:nowrap;
 }
 .modal-desc { font-size:.8rem; color:var(--muted); line-height:1.9; }
 .modal-close {
   position:absolute; top:14px; right:18px;
   font-family:var(--ff-d); font-size:.54rem; letter-spacing:.2em; text-transform:uppercase;
   color:var(--muted); transition:color .2s; cursor:none;
+  z-index: 20;
 }
 .modal-close:hover { color:var(--text); }
 
@@ -713,6 +721,10 @@ footer {
   100%{ opacity:0; }
 }
 
+@media(pointer: coarse){
+  body, a, button, .wi, .modal-close, .wi-tag, .nav-center a { cursor: auto !important; }
+  #cur, #cur-o { display: none !important; }
+}
 @media(max-width:860px){
   nav { padding:0 20px; }
   .nav-center { gap:18px; }
@@ -727,17 +739,20 @@ footer {
   .contact-inner-single { padding:48px 20px; }
   footer { padding:18px 20px; }
   /* modal SP */
-  .modal-wrap { padding:12px; }
+  .modal-wrap { padding:12px; align-items:flex-start; padding-top:24px; }
   .modal-card { width:100%; max-width:100%; }
-  .modal-slider { aspect-ratio: unset; height: auto; }
-  .modal-slider-inner img {
-    width: calc(100vw - 24px);
-    max-width: 100%;
-    height: auto;
-    aspect-ratio: unset;
-    object-fit: contain;
+  .modal-close {
+    position:absolute;
+    top:-36px;
+    right:0;
+    font-size:.62rem;
+    padding:6px 10px;
+    color:var(--text);
+    background:white;
+    border:1px solid var(--line);
+    border-radius:20px;
+    z-index:20;
   }
-  .modal-vid { aspect-ratio: unset; min-height: 200px; }
 }
 </style>
 </head>
@@ -901,6 +916,10 @@ footer {
 </main>
 
 <!-- MODAL -->
+
+  </div>
+</div>
+
 <div class="modal-wrap" id="modal" onclick="closeOut(event)">
   <div class="modal-card">
     <button class="modal-close" onclick="closeModal()">close ×</button>
@@ -914,10 +933,10 @@ footer {
     </div>
   </div>
 </div>
-
 <script>
-/* cursor */
+/* cursor — skip on touch devices */
 const cur=document.getElementById('cur'),curO=document.getElementById('cur-o');
+if(window.matchMedia('(pointer: fine)').matches){
 let ox=0,oy=0;
 document.addEventListener('mousemove',e=>{
   cur.style.left=e.clientX+'px'; cur.style.top=e.clientY+'px';
@@ -925,12 +944,13 @@ document.addEventListener('mousemove',e=>{
   curO.style.left=ox+'px'; curO.style.top=oy+'px';
 });
 setInterval(()=>{ curO.style.left=ox+'px'; curO.style.top=oy+'px'; },16);
+} // end pointer: fine
 
 /* veil */
 setTimeout(()=>document.getElementById('veil').classList.add('gone'),2000);
 
 /* scroll nav active */
-function scrollTo_(id){ document.querySelector(id).scrollIntoView({behavior:'smooth'}); }
+function scrollTo_(id){ const el = document.querySelector(id); if(!el) return; const top = el.getBoundingClientRect().top + window.scrollY - 54; window.scrollTo({top, behavior:'smooth'}); }
 const sections=['works','about','contact'];
 const navLinks=document.querySelectorAll('.nav-center a');
 window.addEventListener('scroll',()=>{
@@ -1144,61 +1164,81 @@ function getWork(i){
 }
 
 function openModal(i){
-  const w=getWork(i);
-  const mVid = document.getElementById('mVid');
-  if(w.images && w.images.length > 0) {
-    let si = 0;
-    const imgs = w.images;
-    const render = () => `
-      <div class="modal-slider">
-        <div class="modal-slider-inner" id="msInner" style="transform:translateX(-${si*100}%)">
-          ${imgs.map(src=>`<img src="${src}" alt="">`).join('')}
-        </div>
-        <button class="modal-slider-btn prev" onclick="msPrev()">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-        </button>
-        <button class="modal-slider-btn next" onclick="msNext()">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-        </button>
-        <div class="modal-slider-dots">
-          ${imgs.map((_,i)=>`<div class="modal-slider-dot${i===si?' active':''}" onclick="msGo(${i})"></div>`).join('')}
-        </div>
-      </div>`;
-    mVid.innerHTML = render();
-    const getW = () => mVid.offsetWidth;
-    window.msGo = (i) => {
-      si = (i + imgs.length) % imgs.length;
-      document.getElementById('msInner').style.transform = `translateX(-${si * getW()}px)`;
-      document.querySelectorAll('.modal-slider-dot').forEach((d,idx) => d.classList.toggle('active', idx===si));
+  var w = getWork(i);
+  var mVid = document.getElementById('mVid');
+  mVid.innerHTML = '';
+
+  if(w.images && w.images.length > 0){
+    // スライダー
+    var wrap = document.createElement('div');
+    wrap.className = 'modal-slider-wrap';
+    var si = 0;
+    w.images.forEach(function(src, idx){
+      var img = document.createElement('img');
+      img.className = 'modal-slider-img' + (idx===0 ? ' active' : '');
+      img.src = src;
+      img.alt = '';
+      wrap.appendChild(img);
+    });
+    var btnP = document.createElement('button');
+    btnP.className = 'modal-slider-btn prev';
+    btnP.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>';
+    btnP.onclick = function(){ msGo(si-1); };
+    wrap.appendChild(btnP);
+    var btnN = document.createElement('button');
+    btnN.className = 'modal-slider-btn next';
+    btnN.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>';
+    btnN.onclick = function(){ msGo(si+1); };
+    wrap.appendChild(btnN);
+    if(w.images.length > 1){
+      var dots = document.createElement('div');
+      dots.className = 'modal-slider-dots';
+      w.images.forEach(function(_,idx){
+        var d = document.createElement('div');
+        d.className = 'modal-slider-dot'+(idx===0?' active':'');
+        d.onclick = (function(n){return function(){msGo(n);};})(idx);
+        dots.appendChild(d);
+      });
+      wrap.appendChild(dots);
+    }
+    mVid.appendChild(wrap);
+    window.msGo = function(idx){
+      var imgs = mVid.querySelectorAll('.modal-slider-img');
+      var ds = mVid.querySelectorAll('.modal-slider-dot');
+      imgs[si].classList.remove('active');
+      if(ds[si]) ds[si].classList.remove('active');
+      si = (idx+w.images.length)%w.images.length;
+      imgs[si].classList.add('active');
+      if(ds[si]) ds[si].classList.add('active');
     };
-    window.msPrev = () => msGo(si - 1);
-    window.msNext = () => msGo(si + 1);
+  } else if(w.ytid){
+    var a = document.createElement('a');
+    a.href = 'https://www.youtube.com/watch?v='+w.ytid;
+    a.target = '_blank';
+    a.innerHTML = '<svg width="52" height="52" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="rgba(255,255,255,.12)"/><polygon points="10,8 16,12 10,16" fill="white"/></svg><span style="font-family:var(--ff-d);font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.6);">YouTube で見る ↗</span>';
+    mVid.appendChild(a);
+  } else if(w.thumb){
+    var img = document.createElement('img');
+    img.src = w.thumb;
+    img.alt = w.title;
+    mVid.appendChild(img);
   } else {
-  mVid.innerHTML = w.ytid
-    ? `<a href="https://www.youtube.com/watch?v=${w.ytid}" target="_blank" style="display:flex;width:100%;aspect-ratio:16/9;background:#0a0a0a;align-items:center;justify-content:center;text-decoration:none;gap:12px;flex-direction:column;">
-        <svg width="52" height="52" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="rgba(255,255,255,.12)"/><polygon points="10,8 16,12 10,16" fill="white"/></svg>
-        <span style="font-family:var(--ff-d);font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.6);">YouTube で見る ↗</span>
-      </a>`
-    : w.thumb
-    ? `<img src="${w.thumb}" alt="${w.title}" style="width:100%;aspect-ratio:16/9;object-fit:contain;display:block;background:#e8e8e6;">`
-    : `<div style="width:100%;aspect-ratio:16/9;background:${w.bg};display:flex;align-items:center;justify-content:center">
-        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="rgba(10,10,10,.15)" stroke-width=".8">
-          <circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16" fill="rgba(10,10,10,.12)" stroke="none"/>
-        </svg>
-      </div>`;
-  } // end else (non-slider)
-  document.getElementById('mTags').innerHTML=w.tags.map(t=>`<span class="modal-tag">${t}</span>`).join('');
-  const mDesc = document.getElementById('mDesc');
+    var div = document.createElement('div');
+    div.style.cssText = 'width:100%;aspect-ratio:16/9;background:'+w.bg+';display:flex;align-items:center;justify-content:center;';
+    mVid.appendChild(div);
+  }
+
+  document.getElementById('mTags').innerHTML = w.tags.map(function(t){return '<span class="modal-tag">'+t+'</span>';}).join('');
+  var mDesc = document.getElementById('mDesc');
   mDesc.innerHTML = w.desc + (w.descEn ? '<br><span class="en">'+w.descEn+'</span>' : '');
-  // show Instagram or YouTube link
-  const linkEl = document.getElementById('mLink');
+  var linkEl = document.getElementById('mLink');
   if(w.insta){
-    linkEl.innerHTML=`<a href="${w.insta}" target="_blank" style="font-family:var(--ff-d);font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:var(--pink-d);display:inline-flex;align-items:center;gap:6px;">Instagram で見る <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>`;
+    linkEl.innerHTML = '<a href="'+w.insta+'" target="_blank" style="font-family:var(--ff-d);font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:var(--pink-d);display:inline-flex;align-items:center;gap:6px;">Instagram で見る <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>';
   } else {
-    linkEl.innerHTML='';
+    linkEl.innerHTML = '';
   }
   document.getElementById('modal').classList.add('open');
-  document.body.style.overflow='hidden';
+  document.body.style.overflow = 'hidden';
 }
 function closeModal(){document.getElementById('modal').classList.remove('open');document.body.style.overflow='';document.getElementById('mVid').innerHTML='';}
 function closeOut(e){if(e.target===document.getElementById('modal'))closeModal();}
@@ -1224,5 +1264,6 @@ buildHeroSlide();
 buildWorks();
 </script>
 </div>
+
 </body>
 </html>
