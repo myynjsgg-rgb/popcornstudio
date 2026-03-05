@@ -180,6 +180,7 @@ nav {
   border-radius:8px;
   border:1px solid rgba(10,10,10,0.07);
   box-shadow:0 2px 12px rgba(10,10,10,0.07);
+  display:flex; flex-direction:column;
 }
 .wi:nth-child(3n) { }
 
@@ -190,6 +191,7 @@ nav {
   overflow:hidden; transition:background .35s;
   position:relative;
   border-radius:32px;
+  flex-shrink:0;
 }
 .wi-img img, .wi-img-inner {
   transition:transform .45s cubic-bezier(0.16,1,0.3,1);
@@ -212,13 +214,16 @@ nav {
 
 .wi-foot {
   padding:11px 14px 10px;
-  display:flex; justify-content:space-between; align-items:center;
 }
+.wi-foot-left { display:block; padding-right:28px; }
 .wi-title {
   font-family:var(--ff-d); font-size:.68rem;
   font-weight:500; letter-spacing:.04em; text-transform:uppercase;
 }
-.wi-tags { display:flex; gap:5px; flex-wrap:wrap; margin-top:3px; }
+.wi-tags {
+  display:flex; gap:4px; margin-top:3px;
+  flex-wrap:wrap;
+}
 .wi-tag {
   font-family:var(--ff-d); font-size:.52rem;
   letter-spacing:.18em; text-transform:uppercase;
@@ -228,15 +233,18 @@ nav {
   padding:3px 8px;
   background:transparent;
   transition:background .2s;
+  white-space:nowrap;
+  flex-shrink:0;
 }
 .wi:hover .wi-tag { background:rgba(232,56,144,0.10); }
 .wi-tag-sep {
   font-family:var(--ff-d); font-size:.58rem;
-  color:var(--dim); margin:0 2px;
+  color:var(--dim); margin:0 2px; flex-shrink:0;
 }
 .wi-arr {
   font-size:.85rem; color:var(--muted);
-  transition:transform .2s,color .2s; flex-shrink:0;
+  transition:transform .2s,color .2s;
+  position:absolute; bottom:10px; right:12px;
 }
 .wi:hover .wi-arr { transform:translate(3px,-3px); color:var(--green); }
 
@@ -505,6 +513,7 @@ footer {
 .modal-slider-wrap {
   width:100%;
   background:#e8e8e6;
+  position:relative;
 }
 .modal-slider-img {
   width:100%;
@@ -730,7 +739,7 @@ footer {
   .nav-center { gap:18px; }
   .works-hero { padding:48px 20px 36px; }
   .works-section-header { padding:16px 20px; }
-  .works-grid { grid-template-columns:1fr 1fr; padding:16px 20px 32px; gap:12px; }
+  .works-grid { grid-template-columns:1fr 1fr; padding:16px 12px 32px; gap:8px; }
   .wi:nth-child(3n) { border-right:1px solid var(--line); }
   .wi:nth-child(2n) { border-right:1px solid var(--line); }
   .about-inner { grid-template-columns:1fr; padding:48px 20px; }
@@ -738,8 +747,9 @@ footer {
   .about-main { padding:0; }
   .contact-inner-single { padding:48px 20px; }
   footer { padding:18px 20px; }
+  .wi-foot { padding-bottom:0; }
   /* modal SP */
-  .modal-wrap { padding:12px; align-items:flex-start; padding-top:24px; }
+  .modal-wrap { padding:12px; padding-top:48px; }
   .modal-card { width:100%; max-width:100%; }
   .modal-close {
     position:absolute;
@@ -752,6 +762,11 @@ footer {
     border:1px solid var(--line);
     border-radius:20px;
     z-index:20;
+  }
+  .modal-foot {
+    display:flex;
+    flex-direction:column;
+    gap:12px;
   }
 }
 </style>
@@ -1075,9 +1090,9 @@ function buildGrid(arr, gridId, offset){
         <div class="wi-tint"></div>
       </div>
       <div class="wi-foot">
-        <div>
+        <div class="wi-foot-left">
           <p class="wi-title">${w.title}</p>
-          <div class="wi-tags">${w.tags.map(t=>`<span class="wi-tag">${t}</span>`).join('<span class="wi-tag-sep">/</span>')}</div>
+          <div class="wi-tags">${w.tags.map(t=>`<span class="wi-tag">${t}</span>`).join('')}</div>
         </div>
         <span class="wi-arr">↗</span>
       </div>`;
